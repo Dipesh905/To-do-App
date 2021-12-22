@@ -6,19 +6,16 @@ As your To do list are added in the firebase database. You need to be Connected 
 
 below are the screenshots of the simple To Do App
 
-
-
-
-
-<img src="https://user-images.githubusercontent.com/52662002/146936185-3feaadca-189d-41de-a4fc-80e50a5df741.jpg" width="250" height="400" />
-
-<p align="center">
-  <img width="250" height="400" src="https://user-images.githubusercontent.com/52662002/146936224-d085196f-1bbb-4f4e-8a6b-35d6cb3d5138.jpg">
+<p float="left">
+  <img src="https://user-images.githubusercontent.com/52662002/146936185-3feaadca-189d-41de-a4fc-80e50a5df741.jpg" width="250" />
+  <img src="https://user-images.githubusercontent.com/52662002/146936224-d085196f-1bbb-4f4e-8a6b-35d6cb3d5138.jpg" width="250" /> 
+  <img src="https://user-images.githubusercontent.com/52662002/146936242-60759940-4aef-463d-a1fe-37e462c52c1f.jpg" width="250" />
 </p>
 
-<img src="https://user-images.githubusercontent.com/52662002/146936224-d085196f-1bbb-4f4e-8a6b-35d6cb3d5138.jpg" width="250" height="400" />
 
-<img src="https://user-images.githubusercontent.com/52662002/146936242-60759940-4aef-463d-a1fe-37e462c52c1f.jpg" width="250" height="400" />
+
+
+
 
 
 

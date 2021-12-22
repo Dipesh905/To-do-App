@@ -7,9 +7,11 @@ As your To do list are added in the firebase database. You need to be Connected 
 below are the screenshots of the simple To Do App
 
 
-<img src="https://user-images.githubusercontent.com/52662002/146936185-3feaadca-189d-41de-a4fc-80e50a5df741.jpg" width="200" height="400" />
+<img src="https://user-images.githubusercontent.com/52662002/146936185-3feaadca-189d-41de-a4fc-80e50a5df741.jpg" width="300" height="500" />
 
-![Screenshot_2021-12-21-18-57-22-412_com example todoapp](https://user-images.githubusercontent.com/52662002/146936185-3feaadca-189d-41de-a4fc-80e50a5df741.jpg)
+<img src="https://user-images.githubusercontent.com/52662002/146936224-d085196f-1bbb-4f4e-8a6b-35d6cb3d5138.jpg" width="300" height="500" />
+
+<img src="https://user-images.githubusercontent.com/52662002/146936242-60759940-4aef-463d-a1fe-37e462c52c1f.jpg" width="300" height="500" />
 
 ![Screenshot_2021-12-21-18-57-46-258_com example todoapp](https://user-images.githubusercontent.com/52662002/146936224-d085196f-1bbb-4f4e-8a6b-35d6cb3d5138.jpg)
 

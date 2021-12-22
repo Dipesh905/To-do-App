@@ -4,13 +4,16 @@ This is a very simple To do App made with the help of flutter and firebase.
 Here you can add your to do's and also after completion of your to do list, you can delete it too.
 As your To do list are added in the firebase database. You need to be Connected to Internet to add or delete your to do list.
 
-below are the screenshots of the simple To Do App
+below are the screenshots and demo of the simple To Do App
 
 <p float="left">
   <img src="https://user-images.githubusercontent.com/52662002/146936185-3feaadca-189d-41de-a4fc-80e50a5df741.jpg" width="250" />
   <img src="https://user-images.githubusercontent.com/52662002/146936224-d085196f-1bbb-4f4e-8a6b-35d6cb3d5138.jpg" width="250" /> 
   <img src="https://user-images.githubusercontent.com/52662002/146936242-60759940-4aef-463d-a1fe-37e462c52c1f.jpg" width="250" />
+  <video src='https://user-images.githubusercontent.com/52662002/147053768-a7ce1069-5f23-477a-98ab-4d573bd6c7ef.mp4' width=250/>
 </p>
+
+
 
 
 

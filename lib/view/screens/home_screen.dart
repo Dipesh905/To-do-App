@@ -56,13 +56,15 @@ class HomeScreen extends ConsumerWidget {
                     children: <Widget>[
                       InputFieldWidget(
                         controller: _toDoTitleController,
-                        decoration: InputDecoration(hintText: "To do title"),
+                        hintText: "To do title",
+                        //  decoration: InputDecoration(hintText: ),
                         validator: (value) =>
                             value == null ? "Enter the title" : null,
                       ),
                       InputFieldWidget(
                         controller: _toDoRemarksController,
-                        decoration: InputDecoration(hintText: "Remarks"),
+                        hintText: "Remarks",
+                        // decoration: InputDecoration(hintText: "Remarks"),
                         validator: (value) =>
                             value == null ? "Enter the Remarks" : null,
                       ),

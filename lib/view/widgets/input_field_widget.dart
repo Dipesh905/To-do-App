@@ -5,7 +5,6 @@ class InputFieldWidget extends StatelessWidget {
   const InputFieldWidget({
     required this.controller,
     this.labelText,
-    this.decoration,
     this.validator,
     this.obsecureText = false,
     this.readOnly = false,
@@ -68,9 +67,6 @@ class InputFieldWidget extends StatelessWidget {
   /// max lines
   final int? maxLines;
 
-  /// input decoration
-  final InputDecoration? decoration;
-
   /// autofocus
   final bool autofocus;
 
@@ -88,7 +84,14 @@ class InputFieldWidget extends StatelessWidget {
           controller: controller,
           validator: validator,
           maxLength: maxLength,
-          decoration: decoration,
+          decoration: InputDecoration(
+            hintText: hintText,
+            contentPadding: contentPadding,
+            labelText: labelText,
+            helperText: helperText,
+            border: const OutlineInputBorder(),
+            suffixIcon: surfixIcon,
+          ),
           onChanged: onChanged,
         ),
       );

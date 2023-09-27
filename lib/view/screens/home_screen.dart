@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todoapp/controller/to_do_provider.dart';
+import 'package:todoapp/controller/to_do_status_provider.dart';
 import 'package:todoapp/model/to_do_model.dart';
 import 'package:todoapp/view/widgets/button_widget.dart';
 import 'package:todoapp/view/widgets/input_field_widget.dart';
@@ -95,6 +96,36 @@ class HomeScreen extends ConsumerWidget {
                         validator: (value) =>
                             value == null ? "Enter the Remarks" : null,
                       ),
+                      Row(
+                        children: <Widget>[
+                          const Text('To Do Status: '),
+                          Expanded(
+                            child: DropdownButton<String>(
+                              underline: const SizedBox.shrink(),
+                              value: ref.watch(todoStatusProvider),
+                              onChanged: (String? value) {
+                                ref.read(todoStatusProvider.notifier).update(
+                                      (state) => value!,
+                                    );
+                              },
+                              items: const <DropdownMenuItem<String>>[
+                                DropdownMenuItem<String>(
+                                  value: 'not_started',
+                                  child: Text('Not Started'),
+                                ),
+                                DropdownMenuItem<String>(
+                                  value: 'in_progress',
+                                  child: Text('In Progress'),
+                                ),
+                                DropdownMenuItem<String>(
+                                  value: 'completed',
+                                  child: Text('Completed'),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                   actions: <Widget>[
@@ -113,10 +144,11 @@ class HomeScreen extends ConsumerWidget {
                                 if (_globalKey.currentState!.validate()) {
                                   addTodo(
                                       toDoModel: ToDoModel(
-                                          title: _toDoTitleController.text,
-                                          remarks: _toDoRemarksController.text,
-                                          createdOn:
-                                              DateTime.now().toString()));
+                                    title: _toDoTitleController.text,
+                                    remarks: _toDoRemarksController.text,
+                                    createdOn: DateTime.now().toString(),
+                                    toDoStatus: ref.watch(todoStatusProvider),
+                                  ));
 
                                   _toDoTitleController.clear();
                                   _toDoRemarksController.clear();
@@ -143,6 +175,9 @@ class HomeScreen extends ConsumerWidget {
                   itemBuilder: (BuildContext context, int index) {
                     return Card(
                       child: ListTile(
+                        leading: CircleAvatar(
+                          child: Text('${index + 1}'),
+                        ),
                         trailing: IconButton(
                             onPressed: () {
                               deleteTodo(
@@ -150,7 +185,29 @@ class HomeScreen extends ConsumerWidget {
                             },
                             icon: Icon(Icons.delete)),
                         title: Text(toDodatas[index].title),
-                        subtitle: Text(toDodatas[index].remarks),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(toDodatas[index].remarks),
+                            LinearProgressIndicator(
+                                backgroundColor: Colors.blue.shade100,
+                                valueColor: new AlwaysStoppedAnimation<Color>(
+                                    toDodatas[index].toDoStatus == 'not_started'
+                                        ? Colors.blue
+                                        : toDodatas[index].toDoStatus ==
+                                                'in_progress'
+                                            ? Colors.yellow
+                                            : Colors.green),
+                                value:
+                                    toDodatas[index].toDoStatus == 'not_started'
+                                        ? 0.1
+                                        : toDodatas[index].toDoStatus ==
+                                                'in_progress'
+                                            ? 0.5
+                                            : 1),
+                          ],
+                        ),
                       ),
                     );
                   },

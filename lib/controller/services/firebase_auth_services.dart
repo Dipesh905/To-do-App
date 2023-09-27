@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-class FirebaseFunction {
-  final FirebaseAuth _firebaseAuthInstance = FirebaseAuth.instance;
+final FirebaseAuth firebaseAuthInstance = FirebaseAuth.instance;
 
+class FirebaseFunction {
   /// method to create User With Email And Password
   Future<UserCredential?> createUserWithEmailAndPassword({
     required String emailAddress,
@@ -13,7 +13,7 @@ class FirebaseFunction {
   }) async {
     try {
       final UserCredential credential =
-          await _firebaseAuthInstance.createUserWithEmailAndPassword(
+          await firebaseAuthInstance.createUserWithEmailAndPassword(
         email: emailAddress,
         password: password,
       );
@@ -73,7 +73,7 @@ class FirebaseFunction {
   }) async {
     try {
       final UserCredential credential =
-          await _firebaseAuthInstance.signInWithEmailAndPassword(
+          await firebaseAuthInstance.signInWithEmailAndPassword(
         email: emailAddress,
         password: password,
       );

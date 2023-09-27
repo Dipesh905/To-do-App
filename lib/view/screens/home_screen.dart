@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -33,7 +34,35 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<List<ToDoModel>> toDoLists = ref.watch(toDoProvider);
+    final User user = FirebaseAuth.instance.currentUser!;
+
     return Scaffold(
+      drawer: Drawer(
+          child: Column(
+        children: <Widget>[
+          UserAccountsDrawerHeader(
+            accountEmail: Text('${user.email}'),
+            accountName: Text('User Email'),
+            currentAccountPicture: CircleAvatar(
+              child: Text('E'),
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            leading: Icon(Icons.home),
+            title: Text('Home'),
+          ),
+          ListTile(
+            onTap: () async {
+              await FirebaseAuth.instance.signOut();
+            },
+            leading: Icon(Icons.exit_to_app),
+            title: Text('Log Out'),
+          )
+        ],
+      )),
       appBar: AppBar(
         title: Text("Simple To do App"),
         centerTitle: true,
@@ -56,15 +85,13 @@ class HomeScreen extends ConsumerWidget {
                     children: <Widget>[
                       InputFieldWidget(
                         controller: _toDoTitleController,
-                        hintText: "To do title",
-                        //  decoration: InputDecoration(hintText: ),
+                        labelText: "To do title",
                         validator: (value) =>
                             value == null ? "Enter the title" : null,
                       ),
                       InputFieldWidget(
                         controller: _toDoRemarksController,
-                        hintText: "Remarks",
-                        // decoration: InputDecoration(hintText: "Remarks"),
+                        labelText: "Remarks",
                         validator: (value) =>
                             value == null ? "Enter the Remarks" : null,
                       ),

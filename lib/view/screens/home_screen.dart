@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todoapp/controller/to_do_provider.dart';
 import 'package:todoapp/controller/to_do_status_provider.dart';
 import 'package:todoapp/model/to_do_model.dart';
+import 'package:todoapp/view/screens/details_screen.dart';
 import 'package:todoapp/view/widgets/button_widget.dart';
 import 'package:todoapp/view/widgets/input_field_widget.dart';
 
@@ -173,40 +174,51 @@ class HomeScreen extends ConsumerWidget {
               ? ListView.builder(
                   itemCount: toDodatas.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return Card(
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          child: Text('${index + 1}'),
+                    return InkWell(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailScreen(
+                            toDoModel: toDodatas[index],
+                          ),
                         ),
-                        trailing: IconButton(
-                            onPressed: () {
-                              deleteTodo(
-                                  '${toDodatas[index].title}${toDodatas[index].createdOn}');
-                            },
-                            icon: Icon(Icons.delete)),
-                        title: Text(toDodatas[index].title),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(toDodatas[index].remarks),
-                            LinearProgressIndicator(
-                                backgroundColor: Colors.blue.shade100,
-                                valueColor: new AlwaysStoppedAnimation<Color>(
-                                    toDodatas[index].toDoStatus == 'not_started'
-                                        ? Colors.blue
-                                        : toDodatas[index].toDoStatus ==
-                                                'in_progress'
-                                            ? Colors.yellow
-                                            : Colors.green),
-                                value:
-                                    toDodatas[index].toDoStatus == 'not_started'
-                                        ? 0.1
-                                        : toDodatas[index].toDoStatus ==
-                                                'in_progress'
-                                            ? 0.5
-                                            : 1),
-                          ],
+                      ),
+                      child: Card(
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            child: Text('${index + 1}'),
+                          ),
+                          trailing: IconButton(
+                              onPressed: () {
+                                deleteTodo(
+                                    '${toDodatas[index].title}${toDodatas[index].createdOn}');
+                              },
+                              icon: Icon(Icons.delete)),
+                          title: Text(toDodatas[index].title),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(toDodatas[index].remarks),
+                              LinearProgressIndicator(
+                                  backgroundColor: Colors.blue.shade100,
+                                  valueColor: new AlwaysStoppedAnimation<Color>(
+                                      toDodatas[index].toDoStatus ==
+                                              'not_started'
+                                          ? Colors.blue
+                                          : toDodatas[index].toDoStatus ==
+                                                  'in_progress'
+                                              ? Colors.yellow
+                                              : Colors.green),
+                                  value: toDodatas[index].toDoStatus ==
+                                          'not_started'
+                                      ? 0.1
+                                      : toDodatas[index].toDoStatus ==
+                                              'in_progress'
+                                          ? 0.5
+                                          : 1),
+                            ],
+                          ),
                         ),
                       ),
                     );

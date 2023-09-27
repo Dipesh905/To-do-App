@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todoapp/controller/to_do_provider.dart';
+import 'package:todoapp/model/to_do_model.dart';
 
 /// firebaseFirestore Instance
 final FirebaseFirestore firebaseInstance = FirebaseFirestore.instance;
 
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
+class HomeScreen extends ConsumerWidget {
   String newinput = "";
+
   String remarks = "";
 
   GlobalKey<FormState> _globalKey = GlobalKey();
@@ -31,7 +30,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AsyncValue<List<ToDoModel>> toDoLists = ref.watch(toDoProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text("To do App  (By Dipesh Ghimire)"),
@@ -98,44 +98,25 @@ class _HomePageState extends State<HomePage> {
         },
         child: Icon(Icons.add),
       ),
-      body: StreamBuilder(
-        stream: firebaseInstance.collection("Todolist").snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Text(snapshot.data.toString());
-            // return ListView.builder(
-            //   shrinkWrap: true,
-            //   itemCount: snapshot.data.documents.length,
-            //   itemBuilder: (context, index) {
-            //     DocumentSnapshot documentSnapshot =
-            //         snapshot.data.documents[index];
-            //     return Card(
-            //       elevation: 3.0,
-            //       child: ListTile(
-            //         title: Text(documentSnapshot['todotitle ']),
-            //         subtitle: Text(documentSnapshot['remarks']),
-            //         leading: CircleAvatar(
-            //           child: Text("${index + 1}"),
-            //         ),
-            //         trailing: IconButton(
-            //           icon: Icon(Icons.delete),
-            //           onPressed: () {
-            //             deleteTodo(
-            //               documentSnapshot['todotitle '],
-            //             );
-            //           },
-            //         ),
-            //       ),
-            //     );
-            //   },
-            // );
-          } else {
-            return Align(
-              alignment: Alignment.center,
-              child: CircularProgressIndicator(),
-            );
-          }
+      body: toDoLists.when(
+        data: (toDodatas) {
+          return ListView.builder(
+            itemCount: toDodatas.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ListTile(
+                title: Text(toDodatas[index].title),
+                subtitle: Text(toDodatas[index].remarks),
+              );
+            },
+          );
         },
+        error: (error, stackTrace) {
+          print('========$error==============');
+          return Text('SomeThing Went Wrong, please try Again Later');
+        },
+        loading: () => Center(
+          child: CircularProgressIndicator(),
+        ),
       ),
     );
   }

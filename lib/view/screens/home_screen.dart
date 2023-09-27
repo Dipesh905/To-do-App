@@ -18,16 +18,16 @@ class HomeScreen extends ConsumerWidget {
   addTodo({required ToDoModel toDoModel}) {
     DocumentReference ref = firebaseInstance
         .collection("Todolist")
-        .doc(toDoModel.toJson()['todotitle'] + toDoModel.toJson()['createdOn']);
+        .doc(toDoModel.toJson()['createdOn']);
 
     ref.set(toDoModel.toJson()).whenComplete(() => print("added sucessfully"));
   }
 
-  deleteTodo(String uniqueTitleAndDate) {
+  deleteTodo(String todocreatedOn) {
     DocumentReference ref =
-        firebaseInstance.collection("Todolist").doc(uniqueTitleAndDate);
+        firebaseInstance.collection("Todolist").doc(todocreatedOn);
 
-    ref.delete().whenComplete(() => print("$uniqueTitleAndDate deleted"));
+    ref.delete().whenComplete(() => print("$todocreatedOn deleted"));
   }
 
   final TextEditingController _toDoTitleController = TextEditingController();
@@ -190,8 +190,7 @@ class HomeScreen extends ConsumerWidget {
                           ),
                           trailing: IconButton(
                               onPressed: () {
-                                deleteTodo(
-                                    '${toDodatas[index].title}${toDodatas[index].createdOn}');
+                                deleteTodo('${toDodatas[index].createdOn}');
                               },
                               icon: Icon(Icons.delete)),
                           title: Text(toDodatas[index].title),

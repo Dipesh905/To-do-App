@@ -86,9 +86,10 @@ class EditToDOScreen extends StatelessWidget {
                           if (_key.currentState!.validate()) {
                             updateToDoData(
                               updatedToDomdel: ToDoModel(
+                                createdOn: toDoModel.createdOn,
                                 title: _toDoTitleController.text,
                                 remarks: _toDoRemarksController.text,
-                                createdOn: DateTime.now().toString(),
+                                lastModifiedOn: DateTime.now().toString(),
                                 toDoStatus: ref.watch(todoStatusUpdateProvider),
                               ),
                             );
@@ -110,11 +111,7 @@ class EditToDOScreen extends StatelessWidget {
   }
 
   updateToDoData({required ToDoModel updatedToDomdel}) {
-    print(
-        '==============${toDoModel.title}${toDoModel.createdOn}===============');
     var collection = FirebaseFirestore.instance.collection('Todolist');
-    collection
-        .doc('${toDoModel.title}${toDoModel.createdOn}')
-        .update(updatedToDomdel.toJson());
+    collection.doc('${toDoModel.createdOn}').update(updatedToDomdel.toJson());
   }
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+/// firebaseFirestore Instance
+final FirebaseFirestore firebaseInstance = FirebaseFirestore.instance;
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -14,16 +17,15 @@ class _HomePageState extends State<HomePage> {
 
   addTodo() {
     DocumentReference ref =
-        Firestore.instance.collection("Todolist").document(newinput);
+        firebaseInstance.collection("Todolist").doc(newinput);
 
     Map<String, String> todolist = {"todotitle ": newinput, "remarks": remarks};
 
-    ref.setData(todolist).whenComplete(() => print("$newinput created"));
+    ref.set(todolist).whenComplete(() => print("$newinput created"));
   }
 
   deleteTodo(item) {
-    DocumentReference ref =
-        Firestore.instance.collection("Todolist").document(item);
+    DocumentReference ref = firebaseInstance.collection("Todolist").doc(item);
 
     ref.delete().whenComplete(() => print("$item deleted"));
   }
@@ -59,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                             newinput = value;
                           },
                           validator: (value) =>
-                              value.isEmpty ? "Enter the title" : null,
+                              value == null ? "Enter the title" : null,
                         ),
                         TextFormField(
                           decoration: InputDecoration(hintText: "Remarks"),
@@ -67,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                             remarks = value;
                           },
                           validator: (value) =>
-                              value.isEmpty ? "Enter the Remarks" : null,
+                              value == null ? "Enter the Remarks" : null,
                         ),
                         SizedBox(
                           height: 10,
@@ -77,9 +79,9 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   actions: <Widget>[
-                    FlatButton(
+                    ElevatedButton(
                         onPressed: () {
-                          if (_globalKey.currentState.validate()) {
+                          if (_globalKey.currentState!.validate()) {
                             addTodo();
                             Navigator.pop(context);
                           }
@@ -97,35 +99,36 @@ class _HomePageState extends State<HomePage> {
         child: Icon(Icons.add),
       ),
       body: StreamBuilder(
-        stream: Firestore.instance.collection("Todolist").snapshots(),
+        stream: firebaseInstance.collection("Todolist").snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return ListView.builder(
-              shrinkWrap: true,
-              itemCount: snapshot.data.documents.length,
-              itemBuilder: (context, index) {
-                DocumentSnapshot documentSnapshot =
-                    snapshot.data.documents[index];
-                return Card(
-                  elevation: 3.0,
-                  child: ListTile(
-                    title: Text(documentSnapshot['todotitle ']),
-                    subtitle: Text(documentSnapshot['remarks']),
-                    leading: CircleAvatar(
-                      child: Text("${index + 1}"),
-                    ),
-                    trailing: IconButton(
-                      icon: Icon(Icons.delete),
-                      onPressed: () {
-                        deleteTodo(
-                          documentSnapshot['todotitle '],
-                        );
-                      },
-                    ),
-                  ),
-                );
-              },
-            );
+            return Text(snapshot.data.toString());
+            // return ListView.builder(
+            //   shrinkWrap: true,
+            //   itemCount: snapshot.data.documents.length,
+            //   itemBuilder: (context, index) {
+            //     DocumentSnapshot documentSnapshot =
+            //         snapshot.data.documents[index];
+            //     return Card(
+            //       elevation: 3.0,
+            //       child: ListTile(
+            //         title: Text(documentSnapshot['todotitle ']),
+            //         subtitle: Text(documentSnapshot['remarks']),
+            //         leading: CircleAvatar(
+            //           child: Text("${index + 1}"),
+            //         ),
+            //         trailing: IconButton(
+            //           icon: Icon(Icons.delete),
+            //           onPressed: () {
+            //             deleteTodo(
+            //               documentSnapshot['todotitle '],
+            //             );
+            //           },
+            //         ),
+            //       ),
+            //     );
+            //   },
+            // );
           } else {
             return Align(
               alignment: Alignment.center,

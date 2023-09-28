@@ -17,3 +17,49 @@ final StreamProvider<List<ToDoModel>> toDoProvider =
     StreamProvider<List<ToDoModel>>(
   (StreamProviderRef<List<ToDoModel>> ref) => _fetchToDoLists(),
 );
+
+final Provider<List<ToDoModel>> allToDosProvider =
+    Provider<List<ToDoModel>>((ProviderRef<Object?> ref) {
+  final AsyncValue<List<ToDoModel>> todos = ref.watch(toDoProvider);
+
+  return todos.when(
+    data: (List<ToDoModel> data) => data.reversed.toList(),
+    error: (Object error, StackTrace stackTrace) {
+      return <ToDoModel>[];
+    },
+    loading: () => <ToDoModel>[],
+  );
+});
+
+final Provider<List<ToDoModel>> notStartedToDoProvider =
+    Provider<List<ToDoModel>>((ProviderRef<Object?> ref) {
+  final List<ToDoModel> allToDos = ref.watch(allToDosProvider);
+
+  return allToDos
+      .where(
+        (ToDoModel element) => element.toDoStatus.contains('not_started'),
+      )
+      .toList();
+});
+
+final Provider<List<ToDoModel>> inProgressToDoProvider =
+    Provider<List<ToDoModel>>((ProviderRef<Object?> ref) {
+  final List<ToDoModel> allToDos = ref.watch(allToDosProvider);
+
+  return allToDos
+      .where(
+        (ToDoModel element) => element.toDoStatus.contains('in_progress'),
+      )
+      .toList();
+});
+
+final Provider<List<ToDoModel>> completedToDoProvider =
+    Provider<List<ToDoModel>>((ProviderRef<Object?> ref) {
+  final List<ToDoModel> allToDos = ref.watch(allToDosProvider);
+
+  return allToDos
+      .where(
+        (ToDoModel element) => element.toDoStatus.contains('completed'),
+      )
+      .toList();
+});

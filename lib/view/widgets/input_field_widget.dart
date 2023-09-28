@@ -71,28 +71,25 @@ class InputFieldWidget extends StatelessWidget {
   final bool autofocus;
 
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.all(8),
-        child: TextFormField(
-          autofocus: autofocus,
-          onTap: onTap,
-          readOnly: readOnly,
-          keyboardType: keyboardType,
-          obscureText: obsecureText,
-          maxLines: maxLines,
-          initialValue: initialValue,
-          controller: controller,
-          validator: validator,
-          maxLength: maxLength,
-          decoration: InputDecoration(
-            hintText: hintText,
-            contentPadding: contentPadding,
-            labelText: labelText,
-            helperText: helperText,
-            border: const OutlineInputBorder(),
-            suffixIcon: surfixIcon,
-          ),
-          onChanged: onChanged,
+  Widget build(BuildContext context) => TextFormField(
+        autofocus: autofocus,
+        onTap: onTap,
+        readOnly: readOnly,
+        keyboardType: keyboardType,
+        obscureText: obsecureText,
+        maxLines: maxLines,
+        initialValue: initialValue,
+        controller: controller,
+        validator: validator,
+        maxLength: maxLength,
+        decoration: InputDecoration(
+          hintText: hintText,
+          contentPadding: contentPadding,
+          labelText: labelText,
+          helperText: helperText,
+          border: const OutlineInputBorder(),
+          suffixIcon: surfixIcon,
         ),
+        onChanged: onChanged,
       );
 }

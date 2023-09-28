@@ -5,7 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todoapp/controller/services/firebase_auth_services.dart';
 import 'package:todoapp/controller/signup_screen_provider.dart';
-import 'package:todoapp/view/screens/sign_in_screen.dart';
+import 'package:todoapp/view/screens/log_in_screen.dart';
 import 'package:todoapp/view/widgets/button_widget.dart';
 import 'package:todoapp/view/widgets/input_field_widget.dart';
 
@@ -29,81 +29,133 @@ class SignUpScreen extends ConsumerWidget {
   final GlobalKey<FormState> _signupscreenkey = GlobalKey<FormState>();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => Scaffold(
-        appBar: AppBar(
-          title: const Text('Sign Up'),
-          centerTitle: true,
-        ),
-        body: SingleChildScrollView(
+  Widget build(BuildContext context, WidgetRef ref) {
+    const TextStyle textStyle = TextStyle(
+      fontSize: 30,
+      color: Colors.black,
+      fontWeight: FontWeight.bold,
+    );
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
           child: Padding(
             padding: const EdgeInsets.all(8),
             child: Form(
               key: _signupscreenkey,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  InputFieldWidget(
-                    surfixIcon: const Icon(Icons.email),
-                    validator: (String? value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter your email';
-                      } else if (_emailregex.hasMatch(_emailController.text)) {
-                        return null;
-                      } else {
-                        return 'Invalid email please enter correct email';
-                      }
-                    },
-                    labelText: 'Email',
-                    controller: _emailController,
-                  ),
-                  InputFieldWidget(
-                    obsecureText: ref.watch(obsecureValueProvider),
-                    surfixIcon: IconButton(
-                      onPressed: () {
-                        ref
-                            .read(obsecureValueProvider.notifier)
-                            .update((bool state) => !state);
-                      },
-                      icon: ref.watch(obsecureValueProvider)
-                          ? const Icon(Icons.visibility_off)
-                          : const Icon(Icons.visibility),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: const Text(
+                      'Create an account',
+                      style: textStyle,
                     ),
-                    validator: (String? value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter your password';
-                      } else if (_passwordregex
-                          .hasMatch(_passwordController.text)) {
-                        return null;
-                      } else {
-                        return 'Use atleast 1 Uppercase,lowercase,Number and Special Character';
-                      }
-                    },
-                    labelText: 'Password',
-                    controller: _passwordController,
                   ),
-                  InputFieldWidget(
-                    obsecureText: ref.watch(confirmPasswordObsecureProvider),
-                    surfixIcon: IconButton(
-                      onPressed: () {
-                        ref
-                            .read(confirmPasswordObsecureProvider.notifier)
-                            .update((bool state) => !state);
-                      },
-                      icon: ref.watch(confirmPasswordObsecureProvider)
-                          ? const Icon(Icons.visibility_off)
-                          : const Icon(Icons.visibility),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 3.0),
+                    child: Text(
+                      'Email Address',
+                      style: textStyle.copyWith(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                      ),
                     ),
-                    validator: (String? value) {
-                      if (value!.isEmpty) {
-                        return 'Please re-enter your password';
-                      } else if (_confirmPasswordController.text ==
-                          _passwordController.text) {
-                        return null;
-                      } else {
-                        return "Password doesn't match";
-                      }
-                    },
-                    labelText: 'Confirm Password',
-                    controller: _confirmPasswordController,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: InputFieldWidget(
+                      surfixIcon: const Icon(Icons.email),
+                      validator: (String? value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter your email';
+                        } else if (_emailregex
+                            .hasMatch(_emailController.text)) {
+                          return null;
+                        } else {
+                          return 'Invalid email please enter correct email';
+                        }
+                      },
+                      hintText: 'abc@gmail.com',
+                      controller: _emailController,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 3.0),
+                    child: Text(
+                      'Password',
+                      style: textStyle.copyWith(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: InputFieldWidget(
+                      obsecureText: ref.watch(obsecureValueProvider),
+                      surfixIcon: IconButton(
+                        onPressed: () {
+                          ref
+                              .read(obsecureValueProvider.notifier)
+                              .update((bool state) => !state);
+                        },
+                        icon: ref.watch(obsecureValueProvider)
+                            ? const Icon(Icons.visibility_off)
+                            : const Icon(Icons.visibility),
+                      ),
+                      validator: (String? value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter your password';
+                        } else if (_passwordregex
+                            .hasMatch(_passwordController.text)) {
+                          return null;
+                        } else {
+                          return 'Use atleast 1 Uppercase,lowercase,Number and Special Character';
+                        }
+                      },
+                      hintText: '**********',
+                      controller: _passwordController,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 3.0),
+                    child: Text(
+                      'Confirm Password',
+                      style: textStyle.copyWith(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: InputFieldWidget(
+                      obsecureText: ref.watch(confirmPasswordObsecureProvider),
+                      surfixIcon: IconButton(
+                        onPressed: () {
+                          ref
+                              .read(confirmPasswordObsecureProvider.notifier)
+                              .update((bool state) => !state);
+                        },
+                        icon: ref.watch(confirmPasswordObsecureProvider)
+                            ? const Icon(Icons.visibility_off)
+                            : const Icon(Icons.visibility),
+                      ),
+                      validator: (String? value) {
+                        if (value!.isEmpty) {
+                          return 'Please re-enter your password';
+                        } else if (_confirmPasswordController.text ==
+                            _passwordController.text) {
+                          return null;
+                        } else {
+                          return "Password doesn't match";
+                        }
+                      },
+                      hintText: '**********',
+                      controller: _confirmPasswordController,
+                    ),
                   ),
                   ButtonWidget(
                     onPressed: () async {
@@ -142,11 +194,12 @@ class SignUpScreen extends ConsumerWidget {
                   RichText(
                     text: TextSpan(
                       text: 'Already have an account? ',
-                      style: const TextStyle(color: Colors.black, fontSize: 18),
+                      style: const TextStyle(color: Colors.grey, fontSize: 18),
                       children: <TextSpan>[
                         TextSpan(
-                          text: 'Sign In',
+                          text: 'Sign In Here',
                           style: const TextStyle(
+                            fontWeight: FontWeight.w400,
                             color: Colors.blueAccent,
                             fontSize: 18,
                           ),
@@ -154,9 +207,9 @@ class SignUpScreen extends ConsumerWidget {
                             ..onTap = () {
                               Navigator.pushReplacement(
                                 context,
-                                MaterialPageRoute<SignInScreen>(
+                                MaterialPageRoute<LogInScreen>(
                                   builder: (BuildContext context) =>
-                                      SignInScreen(),
+                                      LogInScreen(),
                                 ),
                               );
                             },
@@ -169,5 +222,7 @@ class SignUpScreen extends ConsumerWidget {
             ),
           ),
         ),
-      );
+      ),
+    );
+  }
 }

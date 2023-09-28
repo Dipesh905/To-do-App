@@ -103,11 +103,14 @@ class HomeScreen extends ConsumerWidget {
                         return Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            InputFieldWidget(
-                              controller: _toDoTitleController,
-                              labelText: "To do title",
-                              validator: (value) =>
-                                  value == null ? "Enter the title" : null,
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: InputFieldWidget(
+                                controller: _toDoTitleController,
+                                labelText: "To do title",
+                                validator: (value) =>
+                                    value == null ? "Enter the title" : null,
+                              ),
                             ),
                             InputFieldWidget(
                               controller: _toDoRemarksController,
@@ -118,32 +121,30 @@ class HomeScreen extends ConsumerWidget {
                             Row(
                               children: <Widget>[
                                 const Text('To Do Status: '),
-                                Expanded(
-                                  child: DropdownButton<String>(
-                                    underline: const SizedBox.shrink(),
-                                    value: ref.watch(todoStatusProvider),
-                                    onChanged: (String? value) {
-                                      ref
-                                          .read(todoStatusProvider.notifier)
-                                          .update(
-                                            (state) => value!,
-                                          );
-                                    },
-                                    items: const <DropdownMenuItem<String>>[
-                                      DropdownMenuItem<String>(
-                                        value: 'not_started',
-                                        child: Text('Not Started'),
-                                      ),
-                                      DropdownMenuItem<String>(
-                                        value: 'in_progress',
-                                        child: Text('In Progress'),
-                                      ),
-                                      DropdownMenuItem<String>(
-                                        value: 'completed',
-                                        child: Text('Completed'),
-                                      ),
-                                    ],
-                                  ),
+                                DropdownButton<String>(
+                                  underline: const SizedBox.shrink(),
+                                  value: ref.watch(todoStatusProvider),
+                                  onChanged: (String? value) {
+                                    ref
+                                        .read(todoStatusProvider.notifier)
+                                        .update(
+                                          (state) => value!,
+                                        );
+                                  },
+                                  items: const <DropdownMenuItem<String>>[
+                                    DropdownMenuItem<String>(
+                                      value: 'not_started',
+                                      child: Text('Not Started'),
+                                    ),
+                                    DropdownMenuItem<String>(
+                                      value: 'in_progress',
+                                      child: Text('In Progress'),
+                                    ),
+                                    DropdownMenuItem<String>(
+                                      value: 'completed',
+                                      child: Text('Completed'),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),

@@ -5,7 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todoapp/controller/services/firebase_auth_services.dart';
 import 'package:todoapp/view/screens/home_screen.dart';
-import 'package:todoapp/view/screens/sign_in_screen.dart';
+import 'package:todoapp/view/screens/log_in_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
             return const Text(
                 'SomeThing Went Wrong While Logging In, Please Try Again Later');
           } else {
-            return SignInScreen();
+            return LogInScreen();
           }
         },
       ),

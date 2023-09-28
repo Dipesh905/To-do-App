@@ -1,8 +1,49 @@
 # ToDoApp
 
-This is a very simple To do App made with the help of flutter and firebase.
-Here you can add your to do's and also after completion of your to do list, you can delete it too.
-As your To do list are added in the firebase database. You need to be Connected to Internet to add or delete your to do list.
+This is a simple to do app made with the help of flutter and dart. Firebase is used as a backend and riverpod is used as statemanagement and project follows MVC (Model-View-Controller) pattern.
+User can add, edit or delete to dos. I have implemented firebase authentication with email and password in this project.
+
+I have implemented few functionalities in the app such as validation,filtering to do lists, email and strong password validation, firebase authentication, loader, date time formatting, showing error or sucess dialogue in this project. This project might be helpful for flutter and dart begineers.
+
+
+## Getting Started
+
+Clone to do app to your local computer:
+
+```dart
+git clone https://github.com/Dipesh905/To-do-App
+```
+then run pub get
+
+You have now sucessfully cloned the project. now you can run the project in your local computer
+
+## Screens
+- Login Screen
+- Sign Up Screen
+- HomeScreen
+- Add To Do Screen
+- Edit to do Screen
+- To do Detail Screen
+- Drawer Screen
+
+
+## Implemented Fuctionalities
+- Input Form Validation
+- Firebase Authentication
+- Email Validation
+- Strong Password Validation
+- Showing sucess/error dialogue
+- Filtering To Do Lists
+- DateTime Formatting
+- Easy Loading
+
+## Packages Used
+- firebase_core
+- cloud_firestore
+- flutter_riverpod
+- firebase_auth
+- flutter_easyloading
+-  intl
 
 below are the screenshots and demo of the simple To Do App
 

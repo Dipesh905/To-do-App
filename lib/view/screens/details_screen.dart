@@ -38,7 +38,8 @@ class DetailScreen extends StatelessWidget {
             Text('Title: ${toDoModel.title} '),
             Text('Remarks: ${toDoModel.remarks} '),
             Text('Created On: ${toDoModel.createdOn}'),
-            Text('To Do Status: ${toDoModel.toDoStatus} '),
+            Text(
+                'To Do Status: ${toDoModel.toDoStatus == 'not_started' ? 'Not Started' : toDoModel.toDoStatus == 'in_progress' ? 'In Progress' : 'Completed'} '),
             if (toDoModel.lastModifiedOn != null) ...{
               Text('Last Modified On: ${toDoModel.lastModifiedOn}')
             }

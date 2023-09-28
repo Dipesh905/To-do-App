@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:todoapp/controller/to_do_provider.dart';
 import 'package:todoapp/controller/to_do_status_provider.dart';
 import 'package:todoapp/model/to_do_model.dart';
@@ -90,17 +91,17 @@ class HomeScreen extends ConsumerWidget {
             showDialog(
               context: context,
               builder: (context) {
-                return Form(
-                  key: _globalKey,
-                  child: AlertDialog(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    title: Text(
-                      "Add your Todo's",
-                    ),
-                    content: Consumer(
-                      builder: (context, ref, child) {
-                        return Column(
+                return Consumer(
+                  builder: (context, ref, child) {
+                    return Form(
+                      key: _globalKey,
+                      child: AlertDialog(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        title: Text(
+                          "Add your Todo's",
+                        ),
+                        content: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             Padding(
@@ -149,42 +150,50 @@ class HomeScreen extends ConsumerWidget {
                               ],
                             ),
                           ],
-                        );
-                      },
-                    ),
-                    actions: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            ButtonWidget(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                buttonTitle: 'Cancel'),
-                            ButtonWidget(
-                                onPressed: () {
-                                  if (_globalKey.currentState!.validate()) {
-                                    addTodo(
-                                        toDoModel: ToDoModel(
-                                      title: _toDoTitleController.text,
-                                      remarks: _toDoRemarksController.text,
-                                      createdOn: DateTime.now().toString(),
-                                      toDoStatus: ref.watch(todoStatusProvider),
-                                    ));
-
-                                    _toDoTitleController.clear();
-                                    _toDoRemarksController.clear();
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                buttonTitle: "Add"),
-                          ],
                         ),
+                        actions: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                ButtonWidget(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    buttonTitle: 'Cancel'),
+                                ButtonWidget(
+                                    onPressed: () {
+                                      if (_globalKey.currentState!.validate()) {
+                                        final String datetime1 =
+                                            DateFormat.yMMMMEEEEd()
+                                                .format(DateTime.now());
+
+                                        final String datetime2 =
+                                            DateFormat.jms()
+                                                .format(DateTime.now());
+                                        addTodo(
+                                            toDoModel: ToDoModel(
+                                          title: _toDoTitleController.text,
+                                          remarks: _toDoRemarksController.text,
+                                          createdOn: '$datetime1 $datetime2',
+                                          toDoStatus:
+                                              ref.watch(todoStatusProvider),
+                                        ));
+
+                                        _toDoTitleController.clear();
+                                        _toDoRemarksController.clear();
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    buttonTitle: "Add"),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    );
+                  },
                 );
               },
             );
